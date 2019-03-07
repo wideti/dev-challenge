@@ -58,13 +58,16 @@ Porém temos na documentação de cada equipamento, como eles nos enviam as info
 ## Requisitos do sistema
 
 ### Requisito 1
-Desta forma nosso sistema deverá possuir 3 enpoints:
+Nosso sistema deverá possuir 1 único endpoint que receberá a requisição dos 3 equipamentos e deverá tratar as informações de cada equipamento.
+
+O endpoint deverá tratar o corpo da requisição de acordo com a documentação do equipamento:
+
  - **[POST]** /acme
  - **[POST]** /stark
  - **[POST]** /umbrella
 
 ### Requisito 2
-Como cada equipamento nos envia os dados em um formato diferente porém são as mesmas informações, devemos abstrair para uma classe de domínio chamada "NetworkData", como no exemplo abaixo:
+Como cada equipamento nos envia os dados em um formato diferente porém são as mesmas informações, devemos abstrair para uma classe de domínio chamada **NetworkData**, como no exemplo abaixo:
 
 ```java
 class NetworkData {
@@ -77,7 +80,7 @@ class NetworkData {
 }
 ```
 ### Requisito 3
-Após criar o objeto "NetworkData" deverá  ser feito uma requisição para nosso microserviço de usuários para validar se o usuário existe e poderá se autenticar.
+Após criar o objeto **NetworkData** deverá  ser feito uma requisição para nosso microserviço de usuários para validar se o usuário existe e poderá se autenticar.
 
 > [POST] http://dev.widesoftware.com.br/guest
 
@@ -97,7 +100,7 @@ O retorno pode ser:
 > HTTP Status **401** em caso de acesso negado
 
 ### Requisito 4
-Em caso de sucesso na autenticação devemos enviar os dados do objeto "NetworkData" para uma fila, para que outros serviços possam efetuar uma série de processamentos posteriormente.
+Em caso de sucesso na autenticação devemos enviar os dados do objeto **NetworkData** para uma fila, para que outros serviços possam efetuar uma série de processamentos posteriormente.
 
 > [POST] http://dev.widesoftware.com.br/auth-success-queue
 
