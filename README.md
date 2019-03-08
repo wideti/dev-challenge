@@ -60,8 +60,8 @@ Porém temos na documentação de cada equipamento, como eles nos enviam as info
 * O token para authenticação na API será enviado junto com o e-mail que você recebeu com informações do desafio.
 * Na requisição use sempre o **username: ironMan** e **password: 123456** é o único usuário permitido.
 * O sistema deverá possuir testes automatizados para cobrir apenas a criação do **NetworkData**, pois esse objeto é de extrema importancia e independente do equipamento que gere a requisição ele dever ter que ser criado sem problemas.
-* O projeto deverá ser enviado no Github com instruções de execução dos testes, do sistema e quais os requisitos para executar.
-* O projeto deverá ser criado utilizando Spring Boot com Java8+.
+* O projeto deverá ser enviado no **Github** com instruções de execução dos testes, do sistema e quais os requisitos para executar.
+* O projeto deverá ser criado utilizando **Spring Boot** com **Java8+**.
 * Utilizar Docker é um diferencial.
 
 ### Especificação 1
