@@ -55,9 +55,16 @@ Porém temos na documentação de cada equipamento, como eles nos enviam as info
 }
 ```
 
-## Requisitos do sistema
+## Requisitos & Especificações
 
-### Requisito 1
+* O token para authenticação na API será enviado junto com o e-mail que você recebeu com informações do desafio.
+* Na requisição use sempre o **username: ironMan** e **password: 123456** é o único usuário permitido.
+* O sistema deverá possuir testes automatizados para cobrir apenas a criação do **NetworkData**, pois esse objeto é de extrema importancia e independente do equipamento que gere a requisição ele dever ter que ser criado sem problemas.
+* O projeto deverá ser enviado no Github com instruções de execução dos testes, do sistema e quais os requisitos para executar.
+* O projeto deverá ser criado utilizando Spring Boot com Java8+.
+* Utilizar Docker é um diferencial.
+
+### Especificação 1
 Nosso sistema deverá possuir 1 único endpoint que receberá a requisição dos 3 equipamentos e deverá tratar as informações de cada equipamento.
 
 O endpoint deverá tratar o corpo da requisição de acordo com a documentação do equipamento:
@@ -66,7 +73,7 @@ O endpoint deverá tratar o corpo da requisição de acordo com a documentação
  - **[POST]** /stark
  - **[POST]** /umbrella
 
-### Requisito 2
+### Especificação 2
 Como cada equipamento nos envia os dados em um formato diferente porém são as mesmas informações, devemos abstrair para uma classe de domínio chamada **NetworkData**, como no exemplo abaixo:
 
 ```java
@@ -79,7 +86,7 @@ class NetworkData {
     // ... code
 }
 ```
-### Requisito 3
+### Especificação 3
 Após criar o objeto **NetworkData** deverá  ser feito uma requisição para nosso microserviço de usuários para validar se o usuário existe e poderá se autenticar.
 
 > [POST] http://dev.widesoftware.com.br/guest
@@ -89,7 +96,7 @@ Após criar o objeto **NetworkData** deverá  ser feito uma requisição para no
 {
     "deviceMacaddress": "00-00-00-00-00-00",
     "userMacaddress": "00-00-00-00-00-00",
-    "username": "user_test",
+    "username": "ironMan",
     "password": "123456"
 }
 ```
@@ -97,9 +104,11 @@ O retorno pode ser:
 
 > HTTP Status **204** em caso de sucesso
 
-> HTTP Status **401** em caso de acesso negado
+> HTTP Status **400** em caso de parâmetros inválidos
 
-### Requisito 4
+> HTTP Status **401** em caso de token ou usuário inválido
+
+### Especificação 4
 Em caso de sucesso na autenticação devemos enviar os dados do objeto **NetworkData** para uma fila, para que outros serviços possam efetuar uma série de processamentos posteriormente.
 
 > [POST] http://dev.widesoftware.com.br/auth-success-queue
@@ -109,12 +118,20 @@ Em caso de sucesso na autenticação devemos enviar os dados do objeto **Network
 {
     "deviceMacaddress": "00-00-00-00-00-00",
     "userMacaddress": "00-00-00-00-00-00",
-    "username": "user_test",
+    "username": "ironMan",
     "password": "123456"
 }
 ```
 
-### Requisito 5
+O retorno pode ser:
+
+> HTTP Status **202** em caso de sucesso
+
+> HTTP Status **400** em caso de parâmetros inválidos
+
+> HTTP Status **401** em caso de token ou usuário inválido
+
+### Especificação 5
 Após processar a autenticação e enviar os dados para a fila devemos retornar a seguinte resposta para o equipamento:
 
 #### Em caso de sucesso:
