@@ -86,10 +86,11 @@ class NetworkData {
     // ... code
 }
 ```
+
 ### Especificação 3
 Após criar o objeto **NetworkData** deverá  ser feito uma requisição para nosso microserviço de usuários para validar se o usuário existe e poderá se autenticar.
 
-> [POST] http://dev.widesoftware.com.br/guest
+> [POST] https://dev.widesoftware.com.br/v1/guest
 
 > HEADER Authorization: <access_token>
 ```json 
@@ -111,7 +112,7 @@ O retorno pode ser:
 ### Especificação 4
 Em caso de sucesso na autenticação devemos enviar os dados do objeto **NetworkData** para uma fila, para que outros serviços possam efetuar uma série de processamentos posteriormente.
 
-> [POST] http://dev.widesoftware.com.br/auth-success-queue
+> [POST] https://dev.widesoftware.com.br/v1/auth-success-queue
 
 > HEADER Authorization: <access_token>
 ```json 
