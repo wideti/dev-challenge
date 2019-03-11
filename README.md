@@ -2,20 +2,21 @@
 
 Imagine que você é desenvolvedor de um software que gerencia a rede de um grande cliente. Após alguns meses este cliente nos pediu para desenvolver uma funcionalidade nova no sistema, para que equipamentos de fabricantes diferentes possam se comunicar com nossa plataforma de autenticação de rede.
 
-Sabemos que os equipamentos nos enviam os dados através de uma requisição REST, sabemos também que cada equipamento envia para um determinado endpoint, todos os equipamentos nos enviam as seguinte informações:
+Sabemos que os equipamentos nos enviam os dados através de uma requisição REST e que cada equipamento envia para um determinado endpoint.
+Todos os equipamentos nos enviam as seguinte informações:
 
 - MacAddress do equipamento
 - MacAddress do dispositivo do usuário
 - Username do usuário
 - Senha do usuário
 
-Porém temos uma problema, cada equipamento manda a informação em um formato diferente, pois os fabricantes não possuem um padrão. Temos 3 equipamentos na rede do cliente, são eles:
+Porém temos uma problema: Cada equipamento manda a informação em um formato diferente, pois os fabricantes não possuem um padrão. Temos 3 equipamentos na rede do cliente, são eles:
 
 - Fabricante ACME Corp.
 - Fabricante Industrias Stark
 - Fabricante Umbrella Corp.
 
-Porém temos na documentação de cada equipamento, como eles nos enviam as informações:
+Temos na documentação de cada equipamento como eles nos enviam as informações:
 
 ## Documentação dos equipamentos
 
@@ -74,7 +75,7 @@ O endpoint deverá tratar o corpo da requisição de acordo com a documentação
  - **[POST]** /umbrella
 
 ### Especificação 2
-Como cada equipamento nos envia os dados em um formato diferente porém são as mesmas informações, devemos abstrair para uma classe de domínio chamada **NetworkData**, como no exemplo abaixo:
+Como cada equipamento nos envia os dados em um formato diferente, porém são as mesmas informações, devemos abstrair para uma classe de domínio chamada **NetworkData**, como no exemplo abaixo:
 
 ```java
 class NetworkData {
@@ -88,7 +89,7 @@ class NetworkData {
 ```
 
 ### Especificação 3
-Após criar o objeto **NetworkData** deverá  ser feito uma requisição para nosso microserviço de usuários para validar se o usuário existe e poderá se autenticar.
+Após criar o objeto **NetworkData**, deverá  ser feito uma requisição para nosso microserviço de usuários para validar se o usuário existe e poderá se autenticar.
 
 > [POST] https://dev.widesoftware.com.br/v1/guest
 
@@ -110,7 +111,7 @@ O retorno pode ser:
 > HTTP Status **401** em caso de token ou usuário inválido
 
 ### Especificação 4
-Em caso de sucesso na autenticação devemos enviar os dados do objeto **NetworkData** para uma fila, para que outros serviços possam efetuar uma série de processamentos posteriormente.
+Em caso de sucesso na autenticação, devemos enviar os dados do objeto **NetworkData** para uma fila, para que outros serviços possam efetuar uma série de processamentos posteriormente.
 
 > [POST] https://dev.widesoftware.com.br/v1/auth-success-queue
 
